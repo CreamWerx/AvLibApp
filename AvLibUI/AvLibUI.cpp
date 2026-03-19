@@ -1,7 +1,8 @@
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
-#include <libavutil/avutil.h>
+//#include <libavutil/avutil.h>
+//#include <libswscale/swscale.h>
 }
 
 #include <iostream>
@@ -10,25 +11,25 @@ extern "C" {
 
 int main()
 {
-	AVFormatContext* formatContext = nullptr;
+	AVFormatContext* pformatContext = nullptr;
 
-	if (avformat_open_input(&formatContext, "sample.mp4", nullptr, nullptr) != 0)
+	if (avformat_open_input(&pformatContext, "sample.mp4", nullptr, nullptr) != 0)
 	{
 		std::cout << "Could not open file\n";
 		return -1;
 	}
 	std::cout << "Opened file successfully\n";
 
-	AVCodecParameters* codecParameters;
-	const AVCodec* codec = new AVCodec;
+	AVCodecParameters* pcodecParameters;
+	const AVCodec* pcodec = new AVCodec;
 
-	for (int i = 0; i < formatContext->nb_streams; i++)
+	for (int i = 0; i < pformatContext->nb_streams; i++)
 	{
-		codecParameters = formatContext->streams[i]->codecpar;
-		codec = avcodec_find_decoder(codecParameters->codec_id);
-		if (codec)
+		pcodecParameters = pformatContext->streams[i]->codecpar;
+		pcodec = avcodec_find_decoder(pcodecParameters->codec_id);
+		if (pcodec)
 		{
-			std::cout << "Found codec: " << codec->name << "\n";
+			std::cout << "Found codec: " << pcodec->name << "\n";
 			//only want video stream for now
 			break;
 		}
@@ -38,8 +39,8 @@ int main()
 		}
 	}
 
-	AVCodecContext* codecContext = avcodec_alloc_context3(codec);
-	if (!codecContext)
+	AVCodecContext* pcodecContext = avcodec_alloc_context3(pcodec);
+	if (!pcodecContext)
 	{
 		std::cout << "Could not allocate codec context\n";
 		return -1;
@@ -47,9 +48,9 @@ int main()
 
 
 
-	codecContext = NULL;
-	codec = NULL;
-	avformat_close_input(&formatContext);
+	pcodecContext = NULL;
+	pcodec = NULL;
+	avformat_close_input(&pformatContext);
 
 
 }
