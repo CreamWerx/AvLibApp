@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="AvLibUI/AvLibUI.vcxproj" Id="6fcee193-9a05-477c-bb8e-96c4a731ba4b" />
+</Solution>
